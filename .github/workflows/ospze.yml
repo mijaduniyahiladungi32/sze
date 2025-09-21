@@ -39,7 +39,7 @@ jobs:
     - name: DARS
       if: always()
       run: rm -rf folder
-	
+	  
     - name: Push
       run: |
         cd ${{ secrets.TARGET_NAMETSCHD2 }}
