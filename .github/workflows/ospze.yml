@@ -22,9 +22,10 @@ jobs:
     - name: Unzip secze.zip
       env:
         FILE_API: ${{ secrets.SEZEZP }}
-      run: |
-        # Unzip directly to root, so input.txt is accessible
-        unzip -o -P "$FILE_API" secze.zip
+      run: unzip -o -P "$FILE_API" secze.zip -d folder
+
+    - name: Copy input.txt to root
+      run: cp folder/input.txt .
 
     - name: Run Python script
       run: python3 folder/accoc1.py
@@ -34,13 +35,12 @@ jobs:
         git clone https://x-access-token:${{ secrets.TARGET_TOKENCHS2 }}@${{ secrets.TARGET_URLTSCHD2 }} ${{ secrets.TARGET_NAMETSCHD2 }}
 
     - name: Copy JSON files
-      run: |
-        cp *.json ${{ secrets.TARGET_NAMETSCHD2 }}/
+      run: cp *.json ${{ secrets.TARGET_NAMETSCHD2 }}/
 
     - name: Cleanup
       if: always()
       run: rm -rf folder
-
+	
     - name: Commit & push to target repository
       run: |
         cd ${{ secrets.TARGET_NAMETSCHD2 }}
