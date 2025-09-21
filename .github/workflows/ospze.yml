@@ -2,7 +2,7 @@ name: run
 
 on:
   schedule:
-    - cron: '0 0 */2 * *'  # Every 48 hours
+    - cron: '0 0 */2 * *'  # Every 48 hours (approx every 2 days)
   workflow_dispatch:
 
 jobs:
@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout this repository
       uses: actions/checkout@v3
 
-    - name: Install
+    - name: Install Python dependencies
       run: pip install requests
 
     - name: Create fld
@@ -28,23 +28,23 @@ jobs:
     - name: Rps
       run: python3 folder/accoc1.py
 
-    - name: Clone
+    - name: Clone target Repo
       run: |
         git clone https://x-access-token:${{ secrets.TARGET_TOKENCHS2 }}@${{ secrets.TARGET_URLTSCHD2 }} ${{ secrets.TARGET_NAMETSCHD2 }}
 
-    - name: Copy
+    - name: Copy target repo
       run: |
         cp *.json ${{ secrets.TARGET_NAMETSCHD2 }}/
 
     - name: DARS
       if: always()
       run: rm -rf folder
-	  
-    - name: Push
+	
+    - name: Commit & push to target repository
       run: |
         cd ${{ secrets.TARGET_NAMETSCHD2 }}
         git config user.name "${{ secrets.TARGET_REPO_USER }}"
         git config user.email "${{ secrets.TARGET_REPO_USER }}@users.noreply.github.com"
         git add *.json
-        git commit -m "Auto update playlist on $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+        git commit -m " Auto update playlist on $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
         git push
