@@ -1,4 +1,4 @@
-name: run 
+name: run
 
 on:
   schedule:
@@ -26,6 +26,8 @@ jobs:
         unzip -o -P "$FILE_API" secze.zip -d folder
 
     - name: Rps
+      env:
+        INPUT_FILE: folder/input.txt
       run: python3 folder/accoc1.py
 
     - name: Clone target Repo
@@ -39,7 +41,7 @@ jobs:
     - name: DARS
       if: always()
       run: rm -rf folder
-
+	
     - name: Commit & push to target repository
       run: |
         cd ${{ secrets.TARGET_NAMETSCHD2 }}
