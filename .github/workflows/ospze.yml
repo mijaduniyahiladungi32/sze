@@ -2,7 +2,7 @@ name: run
 
 on:
   schedule:
-    - cron: '*/48 * * * *'  # Every 48 hours
+    - cron: '0 */88 * * *' # Every 48 hours
   workflow_dispatch:
 
 jobs:
