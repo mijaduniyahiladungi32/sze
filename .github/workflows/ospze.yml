@@ -39,7 +39,7 @@ jobs:
     - name: DARS
       if: always()
       run: rm -rf folder
-	
+
     - name: Commit & push to target repository
       run: |
         cd ${{ secrets.TARGET_NAMETSCHD2 }}
